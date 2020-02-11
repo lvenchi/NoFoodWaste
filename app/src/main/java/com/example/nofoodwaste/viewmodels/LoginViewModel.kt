@@ -121,6 +121,13 @@ class LoginViewModel @Inject constructor(): ViewModel() {
             OnCompleteListener { res ->
                 if(res.isSuccessful){
                     firebaseUser.postValue(res.result?.user)
+                    firebaseRepository.addUserToFirebaseDatabase(
+                        User().also {
+                            it.name = res.result?.user?.displayName
+                            it.firebaseid = res.result?.user?.uid
+                            it.email = res.result?.user?.email!!
+                            it.photoLocation = res.result?.user?.photoUrl.toString()
+                        })
                 } else {
                     socialErrors.postValue(res.exception?.message)
                     firebaseUser.postValue(null)
@@ -130,10 +137,6 @@ class LoginViewModel @Inject constructor(): ViewModel() {
             })
     }
 
-    fun loginWithTwitter() {
-
-
-    }
 
     fun requestLostPassword(){
         if(!email.value.isNullOrEmpty()) firebaseRepository.recoverLostPassword(email.value!!)

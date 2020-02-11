@@ -154,7 +154,6 @@ class LoginPage : Fragment() {
                 loginViewModel.getFirebaseAuth()
                     .startActivityForSignInWithProvider( activity!!, provider.build()))
             }
-            loginViewModel.loginWithTwitter()
         }
     }
 
