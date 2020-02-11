@@ -81,9 +81,9 @@ class LoginPage : Fragment() {
                 Snackbar.make(btn_login, "Failed to login", Snackbar.LENGTH_SHORT)
             }
         })
-
+        loginViewModel.socialErrors.value = null
         loginViewModel.socialErrors.observe( this, Observer {
-            Snackbar.make(btn_login, it, Snackbar.LENGTH_SHORT).show()
+            if(!it.isNullOrEmpty())Snackbar.make(btn_login, it, Snackbar.LENGTH_SHORT).show()
         })
         loginViewModel.getCurrentFirebaseUser()
         super.onStart()
