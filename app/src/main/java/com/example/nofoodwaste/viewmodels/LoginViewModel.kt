@@ -131,7 +131,6 @@ class LoginViewModel @Inject constructor(): ViewModel() {
                 } else {
                     socialErrors.postValue(res.exception?.message)
                     firebaseUser.postValue(null)
-
                 }
                 isLoading.postValue(false)
             })
@@ -164,6 +163,7 @@ class LoginViewModel @Inject constructor(): ViewModel() {
 
     fun logOut(){
         firebaseRepository.signOut()
+        firebaseUser.postValue(null)
     }
 
     fun getCurrentFirebaseUser() {

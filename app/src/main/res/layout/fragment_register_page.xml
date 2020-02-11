@@ -15,7 +15,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:background="@color/colorPrimary"
-        tools:context=".RegisterPage"
+        tools:context=".ui.main.login.RegisterPage"
         android:padding="25dp">
 
 

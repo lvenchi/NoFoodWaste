@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="loginviewmodel"
+            type="com.example.nofoodwaste.viewmodels.LoginViewModel" />
+    </data>
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/profile_pic_image"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:src="@drawable/default_user"
+            android:adjustViewBounds="true"
+            android:fitsSystemWindows="false"/>
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            app:layout_constraintTop_toBottomOf="@id/profile_pic_image"
+            android:layout_width="match_parent"
+            android:layout_height="380dp"
+            android:background="@drawable/bottom_sheet_bg"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
+            app:behavior_peekHeight="60dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:id="@+id/namesContainer"
+
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/name"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10sp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:maxLines="1"
+                    android:ellipsize="end"
+                    android:scrollHorizontally="true"
+                    android:hint="@string/name"
+                    android:text="@={loginviewmodel.name}"
+                    android:textSize="20sp"
+                    android:singleLine="true"
+                    app:layout_constrainedWidth="true"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintHorizontal_chainStyle="packed"/>
+
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/surname"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:singleLine="true"
+                    android:hint="@string/last_name"
+                    android:text="@={loginviewmodel.lastName}"
+                    android:textSize="20sp"
+                    android:maxLines="1"
+                    android:scrollHorizontally="true"
+                    app:layout_constrainedWidth="true"
+                    android:ellipsize="end"/>
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/email_"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="@string/email"
+                android:textSize="20sp"
+                android:gravity="center_vertical"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/namesContainer" />
+
+            <TextView
+                android:id="@+id/email"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:gravity="center_vertical"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:scrollHorizontally="true"
+                android:text="@{loginviewmodel.email}"
+                android:textSize="20sp"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintBaseline_toBaselineOf="@id/email_"
+                app:layout_constraintStart_toEndOf="@id/email_"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/namesContainer"
+                app:layout_constrainedWidth="true"/>
+
+            <LinearLayout
+                android:id="@+id/buttons_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/email_"
+                android:layout_marginTop="10dp"
+                android:padding="5dp"
+                android:layout_marginStart="30dp"
+                android:layout_marginEnd="30dp">
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/gallery_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/button_gallery_shape"
+                    android:text="@string/gallery"
+                    android:layout_weight="1" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/photo_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginStart="12dp"
+                    android:text="@string/new_picture"
+                    android:background="@drawable/button_photo_shape" />
+            </LinearLayout>
+
+            <!--<TextView
+                android:id="@+id/password"
+                android:layout_width="180dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:gravity="center_vertical"
+                android:fontFamily="@font/montserrat_bold"
+                android:text="@string/password"
+                android:textSize="20sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/place_favourite_" />
+
+            <EditText
+                android:id="@+id/password_text"
+                android:layout_width="180dp"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:text="@={loginviewmodel.userCopy.password}"
+                android:textSize="20sp"
+                app:layout_constraintStart_toEndOf="@id/place_favourite_"
+                app:layout_constraintTop_toBottomOf="@+id/place_favourite_" />-->
+
+
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/edit_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:layout_marginEnd="30dp"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/button_style"
+                android:text="@string/edit"
+                android:textSize="20sp"
+                app:layout_constraintBottom_toTopOf="@id/logout_button"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/logout_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/button_google_shape"
+                android:layout_marginStart="30dp"
+                android:layout_marginEnd="30dp"
+                android:text="@string/log_out"
+                android:textSize="20sp"
+                android:layout_marginBottom="20dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+</layout>

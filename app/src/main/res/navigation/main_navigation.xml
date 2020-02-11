@@ -6,25 +6,36 @@
     app:startDestination="@id/loginPage">
 
     <fragment
-        android:id="@+id/mainFragment"
-        android:name="com.example.nofoodwaste.ui.main.MainFragment"
-        android:label="main_fragment"
-        tools:layout="@layout/main_fragment" />
-    <fragment
         android:id="@+id/loginPage"
-        android:name="com.example.nofoodwaste.LoginPage"
+        android:name="com.example.nofoodwaste.ui.main.login.LoginPage"
         android:label="FragmentLogin"
         tools:layout="@layout/fragment_login_page">
         <action
-            android:id="@+id/action_fragmentSignup_to_mainFragment"
-            app:destination="@id/mainFragment" />
-        <action
             android:id="@+id/action_fragmentLoginPage_to_registerPage"
             app:destination="@id/registerPage" />
+        <action
+            android:id="@+id/action_loginPage_to_mainFragment"
+            app:destination="@id/mainFragment" />
     </fragment>
+
+    <include app:graph="@navigation/secondary_navigation" />
+
     <fragment
         android:id="@+id/registerPage"
-        android:name="com.example.nofoodwaste.RegisterPage"
+        android:name="com.example.nofoodwaste.ui.main.login.RegisterPage"
         android:label="fragment_register_page"
         tools:layout="@layout/fragment_register_page" />
+
+    <fragment
+        android:id="@+id/mainFragment"
+        android:name="com.example.nofoodwaste.ui.main.content.MainFragment"
+        android:label="main_fragment"
+        tools:layout="@layout/main_fragment" >
+        <action
+            android:id="@+id/action_mainFragment_to_secondary_navigation"
+            app:destination="@id/secondary_navigation" />
+        <action
+            android:id="@+id/action_mainFragment_to_loginPage"
+            app:destination="@id/loginPage" />
+    </fragment>
 </navigation>

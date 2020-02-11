@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation android:id="@+id/secondary_navigation"
+    app:startDestination="@id/products"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <fragment
+        android:id="@+id/products"
+        android:name="com.example.nofoodwaste.ui.main.content.ProductsPage"
+        android:label="fragment_products_page"
+        tools:layout="@layout/fragment_products_page" >
+        <action
+            android:id="@+id/action_productsPage_to_scanPage"
+            app:destination="@id/scans" />
+    </fragment>
+    <fragment
+        android:id="@+id/profile"
+        android:name="com.example.nofoodwaste.ui.main.content.ProfilePage"
+        android:label="fragment_profile"
+        tools:layout="@layout/fragment_profile" />
+    <fragment
+        android:id="@+id/scans"
+        android:name="com.example.nofoodwaste.ui.main.content.ScanPage"
+        android:label="fragment_scan_page"
+        tools:layout="@layout/fragment_scan_page" >
+        <action
+            android:id="@+id/action_scanPage_to_profile2"
+            app:destination="@id/profile" />
+    </fragment>
+</navigation>

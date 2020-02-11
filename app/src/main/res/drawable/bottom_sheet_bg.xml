@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/button_background"
+    android:shape="rectangle" android:innerRadius="2dp" android:dither="true">
+    <padding android:left="2dp"
+        android:top="2dp"
+        android:right="2dp"
+        android:bottom="0dp" />
+    <gradient android:startColor="@color/colorPrimaryVariant"
+        android:endColor="@color/colorPrimaryVariant2">
+    </gradient>
+    <corners android:radius="2dp"/>
+    <size android:height="45dp" android:width="45dp" />
+</shape>

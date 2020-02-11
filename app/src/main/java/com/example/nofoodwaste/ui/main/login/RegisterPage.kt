@@ -1,4 +1,4 @@
-package com.example.nofoodwaste
+package com.example.nofoodwaste.ui.main.login
 
 
 import android.Manifest
@@ -17,6 +17,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
+import com.example.nofoodwaste.R
 import com.example.nofoodwaste.databinding.FragmentRegisterPageBinding
 import com.example.nofoodwaste.di.ComponentInjector
 import com.example.nofoodwaste.utils.Utils
@@ -46,7 +47,8 @@ class RegisterPage : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val binding : FragmentRegisterPageBinding = DataBindingUtil.inflate( inflater, R.layout.fragment_register_page, container, false)
+        val binding : FragmentRegisterPageBinding = DataBindingUtil.inflate( inflater,
+            R.layout.fragment_register_page, container, false)
         binding.lifecycleOwner = this
         binding.viewmodel = loginViewModel
         return binding.root
@@ -76,7 +78,9 @@ class RegisterPage : Fragment() {
         gallery_button.setOnClickListener {
             if(ContextCompat.checkSelfPermission(activity!!, Manifest.permission.READ_EXTERNAL_STORAGE) != PERMISSION_GRANTED
                 || ContextCompat.checkSelfPermission(activity!!, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PERMISSION_GRANTED)
-                requestPermissions(arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE), READ_WRITE_REQUEST_CODE)
+                requestPermissions(arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE),
+                    READ_WRITE_REQUEST_CODE
+                )
             else {
                 val intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
                     .setType("image/*")
@@ -90,8 +94,12 @@ class RegisterPage : Fragment() {
 
         photo_button.setOnClickListener {
             if(ContextCompat.checkSelfPermission(activity!!, Manifest.permission.CAMERA) != PERMISSION_GRANTED)
-                requestPermissions( arrayOf(Manifest.permission.CAMERA), CAMERA_REQUEST_CODE)
-            else startActivityForResult(Intent(MediaStore.ACTION_IMAGE_CAPTURE), REQUEST_IMAGE_CAPTURE)
+                requestPermissions( arrayOf(Manifest.permission.CAMERA),
+                    CAMERA_REQUEST_CODE
+                )
+            else startActivityForResult(Intent(MediaStore.ACTION_IMAGE_CAPTURE),
+                REQUEST_IMAGE_CAPTURE
+            )
         }
 
 
@@ -131,16 +139,20 @@ class RegisterPage : Fragment() {
         permissions: Array<out String>,
         grantResults: IntArray
     ) {
-        if(requestCode == CAMERA_REQUEST_CODE ){
-            if(grantResults[0] == PERMISSION_GRANTED) startActivityForResult(Intent(MediaStore.ACTION_IMAGE_CAPTURE), REQUEST_IMAGE_CAPTURE)
+        if(requestCode == CAMERA_REQUEST_CODE){
+            if(grantResults[0] == PERMISSION_GRANTED) startActivityForResult(Intent(MediaStore.ACTION_IMAGE_CAPTURE),
+                REQUEST_IMAGE_CAPTURE
+            )
             else Snackbar.make(photo_button, "Camera Permission Denied", Snackbar.LENGTH_SHORT).show()
         }
-        else if(requestCode == READ_WRITE_REQUEST_CODE ){
+        else if(requestCode == READ_WRITE_REQUEST_CODE){
             if(grantResults[0] == PERMISSION_GRANTED && grantResults[1] == PERMISSION_GRANTED){
                 val intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
                     .setType("image/*")
                     .addCategory(Intent.CATEGORY_OPENABLE)
-                startActivityForResult(Intent.createChooser(intent, "Select Picture"), IMAGE_REQUEST_CODE)
+                startActivityForResult(Intent.createChooser(intent, "Select Picture"),
+                    IMAGE_REQUEST_CODE
+                )
             } else Snackbar.make(gallery_button, "Storage Permission Denied", Snackbar.LENGTH_SHORT).show()
         }
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)

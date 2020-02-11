@@ -1,4 +1,4 @@
-package com.example.nofoodwaste
+package com.example.nofoodwaste.ui.main.login
 
 
 import android.content.Intent
@@ -12,7 +12,8 @@ import androidx.databinding.BindingAdapter
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.ui.NavigationUI
+import com.example.nofoodwaste.LoginPageDirections
+import com.example.nofoodwaste.R
 import com.example.nofoodwaste.databinding.FragmentLoginPageBinding
 import com.example.nofoodwaste.di.ComponentInjector
 import com.example.nofoodwaste.utils.Utils
@@ -25,14 +26,12 @@ import com.facebook.login.LoginResult
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
-import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputLayout
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.OAuthProvider
 import kotlinx.android.synthetic.main.fragment_login_page.*
-import kotlinx.android.synthetic.main.fragment_register_page.*
 import javax.inject.Inject
 
 private const val GOOGLE_SIGN_IN = 234
@@ -54,6 +53,21 @@ class LoginPage : Fragment() {
         super.onCreate(savedInstanceState)
         ComponentInjector.component.inject(this)
         callbackManager = CallbackManager.Factory.create()
+
+        loginViewModel.firebaseUser.observe(this, Observer {
+            if(it != null){
+                findNavController().navigate(LoginPageDirections.actionLoginPageToMainFragment())
+            } else {
+                Snackbar.make(btn_login, "Failed to login", Snackbar.LENGTH_SHORT)
+            }
+        })
+
+        loginViewModel.socialErrors.value = null
+        loginViewModel.socialErrors.observe( this, Observer {
+            if(!it.isNullOrEmpty())Snackbar.make(btn_login, it, Snackbar.LENGTH_SHORT).show()
+        })
+        loginViewModel.getCurrentFirebaseUser()
+
     }
 
 
@@ -61,7 +75,8 @@ class LoginPage : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val binding : FragmentLoginPageBinding = DataBindingUtil.inflate(inflater,  R.layout.fragment_login_page, container, false)
+        val binding : FragmentLoginPageBinding = DataBindingUtil.inflate(inflater,
+            R.layout.fragment_login_page, container, false)
         binding.loginViewModel = loginViewModel
         binding.lifecycleOwner = this
         return binding.root
@@ -71,22 +86,6 @@ class LoginPage : Fragment() {
         (activity as AppCompatActivity?)!!.supportActionBar!!.hide()
         initButtons()
         super.onViewCreated(view, savedInstanceState)
-    }
-
-    override fun onStart() {
-        loginViewModel.firebaseUser.observe(this, Observer {
-            if(it != null){
-                //findNavController().navigate(LoginPageDirections.actionFragmentSignupToMainFragment())
-            } else {
-                Snackbar.make(btn_login, "Failed to login", Snackbar.LENGTH_SHORT)
-            }
-        })
-        loginViewModel.socialErrors.value = null
-        loginViewModel.socialErrors.observe( this, Observer {
-            if(!it.isNullOrEmpty())Snackbar.make(btn_login, it, Snackbar.LENGTH_SHORT).show()
-        })
-        loginViewModel.getCurrentFirebaseUser()
-        super.onStart()
     }
 
 
@@ -132,7 +131,9 @@ class LoginPage : Fragment() {
                 .requestEmail()
                 .build()
             googleSignInClient = GoogleSignIn.getClient(activity!!, gso)
-            startActivityForResult(googleSignInClient.signInIntent, GOOGLE_SIGN_IN)
+            startActivityForResult(googleSignInClient.signInIntent,
+                GOOGLE_SIGN_IN
+            )
         }
 
         btn_signup.setOnClickListener {
@@ -159,7 +160,7 @@ class LoginPage : Fragment() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if( FacebookSdk.isFacebookRequestCode(requestCode)) callbackManager.onActivityResult(requestCode, resultCode, data)
-        else if(requestCode == GOOGLE_SIGN_IN ){
+        else if(requestCode == GOOGLE_SIGN_IN){
             GoogleSignIn.getSignedInAccountFromIntent(data).addOnCompleteListener {
                 if(it.isSuccessful){
                     loginViewModel.loginWithGoogle(it.result)

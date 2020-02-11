@@ -19,5 +19,7 @@
     <string name="new_picture">New Picture</string>
     <string name="register">Register</string>
     <string name="password">Password</string>
+    <string name="log_out">log out</string>
+    <string name="edit">edit</string>
 
 </resources>
