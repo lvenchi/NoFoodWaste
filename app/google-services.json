@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "171347500769",
+    "firebase_url": "https://nofoodwaste-5d9dd.firebaseio.com",
+    "project_id": "nofoodwaste-5d9dd",
+    "storage_bucket": "nofoodwaste-5d9dd.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:171347500769:android:090222585e768c684721a0",
+        "android_client_info": {
+          "package_name": "com.example.nofoodwaste"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "171347500769-e266o48k2n16qtapojev7u0u6jbd3bk8.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.nofoodwaste",
+            "certificate_hash": "bea5302bcc06ec313382be3d270529651ac78db5"
+          }
+        },
+        {
+          "client_id": "171347500769-n1dknadvkv3o7fpobv6sl2707sineb0q.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAug0f8CUEbuLF0R6HW55bPXXfh3wBWs1Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "171347500769-n1dknadvkv3o7fpobv6sl2707sineb0q.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
