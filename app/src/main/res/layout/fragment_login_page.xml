@@ -8,10 +8,14 @@
             type="com.example.nofoodwaste.viewmodels.LoginViewModel" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/color_green_toolbar"
+        android:background="@color/color_green_toolbar">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:id="@+id/signup_layout">
 
         <!-- LOGO E NOME APP-->
@@ -101,7 +105,7 @@
             android:layout_gravity="center"
             android:background="@drawable/button_login_shape"
             android:text="@string/login"
-            android:enabled="@{!loginViewModel.isLoading()}"
+            android:enabled="@{!loginViewModel.isLoading}"
             android:textColor="@android:color/white"
             android:layout_marginTop="20dp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -119,7 +123,7 @@
             android:text="@string/sign_up"
             android:textColor="@android:color/white"
             android:layout_marginTop="20dp"
-            android:enabled="@{!loginViewModel.isLoading()}"
+            android:enabled="@{!loginViewModel.isLoading}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/btn_login" />
@@ -131,15 +135,15 @@
             android:id="@+id/forgot_password_text_view"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:gravity="center"
+            android:gravity="center_horizontal"
             android:text="@string/forgot_password"
             android:textColor="@color/white"
+            android:layout_marginTop="10dp"
             android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.45"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btn_signup" />
+            app:layout_constraintTop_toBottomOf="@+id/btn_signup"
+            app:layout_constraintBottom_toTopOf="@id/btn_facebook"/>
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_facebook"
@@ -152,7 +156,7 @@
             android:paddingEnd="15dp"
             android:text="@string/login_with_facebook"
             android:textColor="@android:color/white"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
             android:enabled="@{!loginViewModel.isLoading()}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -195,6 +199,30 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/btn_google" />
 
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:layout_marginTop="15dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/btn_twitter">
+
+            <androidx.appcompat.widget.AppCompatImageButton
+                android:id="@+id/flag_italy"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/ic_italy"
+                android:layout_margin="10dp" />
+
+            <androidx.appcompat.widget.AppCompatImageButton
+                android:id="@+id/flag_uk"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_margin="10dp"
+                android:src="@drawable/ic_united_kingdom" />
+        </androidx.appcompat.widget.LinearLayoutCompat>
         <FrameLayout
             android:id="@+id/parentProgressLayout"
             android:layout_width="100dp"
@@ -217,4 +245,5 @@
         </FrameLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
 </layout>

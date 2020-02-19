@@ -7,8 +7,7 @@ import com.google.android.gms.tasks.OnFailureListener
 import com.google.android.gms.tasks.OnSuccessListener
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.*
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.*
 
 class FirebaseRepositoryImpl(val firebaseAuth: FirebaseAuth, val firebaseDatabase: DatabaseReference): FirebaseRepository {
 
@@ -61,6 +60,24 @@ class FirebaseRepositoryImpl(val firebaseAuth: FirebaseAuth, val firebaseDatabas
 
     override fun recoverLostPassword(email: String){
         firebaseAuth.sendPasswordResetEmail(email)
+    }
+
+    override fun addFirebaseUserListener( userId: String, valueEventListener: ValueEventListener ) {
+        firebaseDatabase.child("users")
+            .child(userId)
+            .addValueEventListener(valueEventListener)
+    }
+
+    override fun removeFirebaseUserListener(userId: String, valueEventListener: ValueEventListener){
+        firebaseDatabase.child("users")
+            .child(userId)
+            .removeEventListener(valueEventListener)
+    }
+
+    override fun updateFirebaseUser(updatedUser: User){
+        firebaseDatabase.child("users")
+            .child(updatedUser.firebaseid!!)
+            .setValue(updatedUser)
     }
 
 

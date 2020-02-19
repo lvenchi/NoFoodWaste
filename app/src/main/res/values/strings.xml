@@ -11,8 +11,6 @@
     <string name="facebook_app_id">210384570006653</string>
     <string name="fb_login_protocol_scheme">fb210384570006653</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="name">Name</string>
     <string name="last_name">Last Name</string>
     <string name="gallery">Gallery</string>
@@ -21,5 +19,31 @@
     <string name="password">Password</string>
     <string name="log_out">log out</string>
     <string name="edit">edit</string>
+    <string name="expiration_date">Expiration date</string>
+    <string name="days">days</string>
+    <string name="products">products</string>
+    <string name="scans">scans</string>
+    <string name="profile">profile</string>
+    <string name="today">Today:</string>
+    <string name="tomorrow">Tomorrow:</string>
+    <string name="invalid_mail">Not a valid Email</string>
+    <string name="camera_permission_error">Camera Permission Denied</string>
+    <string name="storage_permission_error">Storage Permission Denied</string>
+    <string name="select_picture">Select Picture</string>
+    <string name="password_length_error">Password must be at least 6 char</string>
+    <string name="invalid_password">Invalid Password</string>
+    <string name="filter_by_product_name">Filter by product name</string>
+    <string name="stop_recording">Stop Recording</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="product_name">Insert Product Name</string>
+    <string name="cancel">Cancel</string>
+    <string name="ok">OK</string>
+    <string name="today_expire">Expires Today</string>
+    <string name="tomorrow_expire">Expires Tomorrow</string>
+    <string name="expired">Expired</string>
+    <string name="this_week_expire">Expires this week</string>
+    <string name="after_a_week_expire">Expires after a week</string>
+    <string name="past">Past Dates</string>
 
 </resources>

@@ -1,7 +1,9 @@
 package com.example.nofoodwaste.ui.main.login
 
 
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -12,7 +14,7 @@ import androidx.databinding.BindingAdapter
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
-import com.example.nofoodwaste.LoginPageDirections
+import com.example.nofoodwaste.NoFoodWasteApplication
 import com.example.nofoodwaste.R
 import com.example.nofoodwaste.databinding.FragmentLoginPageBinding
 import com.example.nofoodwaste.di.ComponentInjector
@@ -32,6 +34,7 @@ import com.google.android.material.textfield.TextInputLayout
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.OAuthProvider
 import kotlinx.android.synthetic.main.fragment_login_page.*
+import java.util.*
 import javax.inject.Inject
 
 private const val GOOGLE_SIGN_IN = 234
@@ -46,16 +49,15 @@ class LoginPage : Fragment() {
     @Inject
     lateinit var loginViewModel: LoginViewModel
 
-    private lateinit var googleSignInClient: GoogleSignInClient
     private lateinit var callbackManager: CallbackManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         ComponentInjector.component.inject(this)
         callbackManager = CallbackManager.Factory.create()
-
         loginViewModel.firebaseUser.observe(this, Observer {
             if(it != null){
+                loginViewModel.addFirebaseUserListener(it.uid)
                 findNavController().navigate(LoginPageDirections.actionLoginPageToMainFragment())
             } else {
                 Snackbar.make(btn_login, "Failed to login", Snackbar.LENGTH_SHORT)
@@ -63,9 +65,11 @@ class LoginPage : Fragment() {
         })
 
         loginViewModel.socialErrors.value = null
+
         loginViewModel.socialErrors.observe( this, Observer {
             if(!it.isNullOrEmpty())Snackbar.make(btn_login, it, Snackbar.LENGTH_SHORT).show()
         })
+
         loginViewModel.getCurrentFirebaseUser()
 
     }
@@ -83,7 +87,7 @@ class LoginPage : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        (activity as AppCompatActivity?)!!.supportActionBar!!.hide()
+//        (activity as AppCompatActivity?)!!.supportActionBar!!.hide()
         initButtons()
         super.onViewCreated(view, savedInstanceState)
     }
@@ -130,8 +134,9 @@ class LoginPage : Fragment() {
                 .requestIdToken("171347500769-n1dknadvkv3o7fpobv6sl2707sineb0q.apps.googleusercontent.com")
                 .requestEmail()
                 .build()
-            googleSignInClient = GoogleSignIn.getClient(activity!!, gso)
-            startActivityForResult(googleSignInClient.signInIntent,
+            loginViewModel.googleSignInClient = GoogleSignIn.getClient(activity!!, gso)
+            startActivityForResult(
+                loginViewModel.googleSignInClient!!.signInIntent,
                 GOOGLE_SIGN_IN
             )
         }
@@ -156,6 +161,19 @@ class LoginPage : Fragment() {
                     .startActivityForSignInWithProvider( activity!!, provider.build()))
             }
         }
+
+        flag_italy.setOnClickListener {
+            Locale.setDefault(Locale.ITALIAN)
+            activity?.getSharedPreferences("my_preferences", Context.MODE_PRIVATE)?.edit()?.putString("locale", "it")?.commit()
+            activity?.recreate()
+        }
+
+        flag_uk.setOnClickListener {
+            Locale.setDefault(Locale.ENGLISH)
+            activity?.getSharedPreferences("my_preferences", Context.MODE_PRIVATE)?.edit()?.putString("locale", "en")?.commit()
+            activity?.recreate()
+        }
+
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

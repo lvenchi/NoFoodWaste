@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto">
+<androidx.cardview.widget.CardView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/menu_item_card_view"
+    android:orientation="vertical"
+    android:layout_margin="5dp"
+    android:layout_marginBottom="10dp"
+    card_view:cardElevation="2dp">
+    
+    <!-- VIEW visualizzata quando si fa swipe -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/view_background"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/delete_icon"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="28dp"
+            android:src="@drawable/ic_delete"
+            card_view:layout_constraintEnd_toEndOf="parent"
+            card_view:layout_constraintHorizontal_bias="1.0"
+            card_view:layout_constraintStart_toStartOf="parent"
+            card_view:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginBottom="28dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:text="Delete"
+            android:textColor="@color/white"
+            android:textSize="13sp"
+            card_view:layout_constraintBottom_toBottomOf="parent"
+            card_view:layout_constraintEnd_toEndOf="parent"
+            card_view:layout_constraintHorizontal_bias="1.0"
+            card_view:layout_constraintStart_toStartOf="parent"
+            card_view:layout_constraintTop_toBottomOf="@+id/delete_icon" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <RelativeLayout
+        android:id="@+id/view_foreground"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:padding="5dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/product_icon"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginBottom="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:src="@drawable/ic_italy"
+                app:civ_border_color="@color/green_box"
+                app:civ_border_width="2dp"
+                card_view:layout_constraintBottom_toBottomOf="parent"
+                card_view:layout_constraintStart_toStartOf="parent"
+                card_view:layout_constraintTop_toTopOf="parent" />
+            <TextView
+                android:id="@+id/textExpiration"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="10dp"
+                android:text="@string/expiration_date"
+                android:textSize="16sp"
+                card_view:layout_constraintStart_toEndOf="@+id/product_icon"
+                card_view:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/expiry_date"
+                android:layout_width="134dp"
+                android:layout_height="22dp"
+                android:layout_alignParentEnd="true"
+                android:layout_alignTop="@+id/textExpiration"
+                android:layout_marginStart="8dp"
+                android:textSize="16sp"
+                card_view:layout_constraintBaseline_toBaselineOf="@+id/textExpiration"
+                card_view:layout_constraintStart_toEndOf="@+id/textExpiration"
+                tools:text="Today, April 03" />
+
+            <TextView
+                android:id="@+id/textViewExpirationDays"
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="14dp"
+                android:text="@string/days"
+                android:textSize="16sp"
+                card_view:layout_constraintStart_toEndOf="@+id/product_icon"
+                card_view:layout_constraintTop_toBottomOf="@+id/textExpiration" />
+
+            <TextView
+                android:id="@+id/textViewExpirationDaysResult"
+                android:layout_width="154dp"
+                android:layout_height="39dp"
+                android:layout_marginStart="20dp"
+                android:text="TextView"
+                android:textSize="16sp"
+                card_view:layout_constraintBaseline_toBaselineOf="@+id/textViewExpirationDays"
+                card_view:layout_constraintStart_toEndOf="@+id/textViewExpirationDays" />
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="14dp"
+                android:text="Product:"
+                android:textSize="16sp"
+                card_view:layout_constraintStart_toEndOf="@+id/product_icon"
+                card_view:layout_constraintTop_toBottomOf="@+id/textViewExpirationDays" />
+
+            <TextView
+                android:id="@+id/productNameList"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:text="TextView"
+                android:textSize="16sp"
+                card_view:layout_constraintBaseline_toBaselineOf="@+id/textView3"
+                card_view:layout_constraintStart_toEndOf="@+id/textView3" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </RelativeLayout>
+
+
+
+   <!-- <android.support.constraint.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.5"/> -->
+
+</androidx.cardview.widget.CardView>
+</FrameLayout>

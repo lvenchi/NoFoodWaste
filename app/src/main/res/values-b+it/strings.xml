@@ -1,0 +1,48 @@
+<resources>
+    <string name="app_name">NoFoodWaste</string>
+    <string name="forgot_password">password dimenticata?</string>
+    <string name="sign_up">registrati</string>
+    <string name="login_with_facebook">accedi con Facebook</string>
+    <string name="login_with_google">accedi con Google</string>
+    <string name="login">accedi</string>
+    <string name="insert_password">Inserisci Password</string>
+    <string name="email">Email</string>
+    <string name="login_with_twitter">accedi con twitter</string>
+    <string name="facebook_app_id">210384570006653</string>
+
+
+
+    <string name="name">Nome</string>
+    <string name="last_name">Cognome</string>
+    <string name="gallery">Galleria</string>
+    <string name="new_picture">Nuova Foto</string>
+    <string name="register">Registrati</string>
+    <string name="password">Password</string>
+    <string name="log_out">log out</string>
+    <string name="edit">modifica</string>
+    <string name="expiration_date">Scadenza</string>
+    <string name="days">Giorni</string>
+    <string name="products">prodotti</string>
+    <string name="scans">scansioni</string>
+    <string name="profile">profilo</string>
+    <string name="today">Oggi:</string>
+    <string name="tomorrow">Domani:</string>
+    <string name="invalid_mail">Not a valid Email</string>
+    <string name="camera_permission_error">Camera Permission Denied</string>
+    <string name="storage_permission_error">Storage Permission Denied</string>
+    <string name="select_picture">Select Picture</string>
+    <string name="password_length_error">Password must be at least 6 char</string>
+    <string name="invalid_password">Invalid Password</string>
+    <string name="filter_by_product_name">Filter by product name</string>
+    <string name="stop_recording">Stop Recording</string>
+    <string name="product_name">Product Name</string>
+    <string name="cancel">cancel</string>
+    <string name="ok">ok</string>
+    <string name="today_expire">Expires Today</string>
+    <string name="tomorrow_expire">Expires Tomorrow</string>
+    <string name="expired">Expired</string>
+    <string name="this_week_expire">Expires this week</string>
+    <string name="after_a_week_expire">Expires after a week</string>
+    <string name="past">Past Dates</string>
+
+</resources>

@@ -2,7 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <item android:id="@+id/products" android:title="products" app:showAsAction="ifRoom"/>
-    <item android:id="@+id/scans" android:title="scans" app:showAsAction="ifRoom"/>
-    <item android:id="@+id/profile" android:title="profile" app:showAsAction="ifRoom"/>
+    <item android:id="@+id/products" android:title="@string/products" app:showAsAction="ifRoom" android:icon="@drawable/ic_shopping_cart"/>
+    <item android:id="@+id/scans" android:title="@string/scans" app:showAsAction="ifRoom" android:icon="@drawable/ic_scanner"/>
+    <item android:id="@+id/profile" android:title="@string/profile" app:showAsAction="ifRoom" android:icon="@drawable/ic_person"/>
 </menu>
