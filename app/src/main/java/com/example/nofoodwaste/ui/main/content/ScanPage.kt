@@ -25,11 +25,13 @@ import com.example.nofoodwaste.databinding.FragmentScanPageBinding
 import com.example.nofoodwaste.di.ComponentInjector
 import com.example.nofoodwaste.ai.DateAnalyzerInterface
 import com.example.nofoodwaste.ai.OverlayView
+import com.example.nofoodwaste.models.Product
 import com.example.nofoodwaste.viewmodels.MainViewModel
 import com.google.android.material.snackbar.Snackbar
 import com.google.common.util.concurrent.ListenableFuture
 import com.google.firebase.ml.vision.text.FirebaseVisionText
 import kotlinx.android.synthetic.main.fragment_scan_page.*
+import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.Executor
 import java.util.concurrent.Executors
@@ -113,9 +115,9 @@ class ScanPage : Fragment(), OverlayView.SizeChangedInformer, DialogInterface.On
         cameraProvider.bindToLifecycle(this as LifecycleOwner, cameraSelector,  analyzer, preview )
     }
 
-    override fun stopDateAnalysis( date: String, textBlocks: FirebaseVisionText.TextBlock, pattern: Pattern ){
+    override fun stopDateAnalysis( date: String, textBlocks: FirebaseVisionText.TextBlock, patternFormat: Pair<Pattern, SimpleDateFormat> ){
         view_to_draw?.drawMatchingDate(textBlocks)
-
+        mainViewModel.productExpireDate = patternFormat
         if(hasRecordPermission()) {
             recordSpeech()
         } else askPermission()
@@ -131,17 +133,20 @@ class ScanPage : Fragment(), OverlayView.SizeChangedInformer, DialogInterface.On
 
     override fun drawTextRects( textBlockList: MutableList<FirebaseVisionText.TextBlock>, rotation: Int ){
         view_to_draw?.drawRectangles(textBlockList, rotation)
-
     }
 
-    fun recordSpeech(){
+    fun recordSpeech() {
 
-        val intent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH)
-        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.ITALIAN)
-        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM)
-        intent.putExtra(RecognizerIntent.EXTRA_PROMPT, "Nome Prodotto")
-        intent.putExtra(RecognizerIntent.EXTRA_MAX_RESULTS,1)
-        intent.putExtra(RecognizerIntent.EXTRA_CALLING_PACKAGE,"voice.recognition.test")
+        val intent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH).apply {
+            putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.ITALIAN)
+            putExtra(
+                RecognizerIntent.EXTRA_LANGUAGE_MODEL,
+                RecognizerIntent.LANGUAGE_MODEL_FREE_FORM
+            )
+            putExtra(RecognizerIntent.EXTRA_PROMPT, getString(R.string.product_name))
+            putExtra(RecognizerIntent.EXTRA_MAX_RESULTS, 1)
+            putExtra(RecognizerIntent.EXTRA_CALLING_PACKAGE, "voice.recognition.test")
+        }
         startActivityForResult(intent, 666)
     }
 
@@ -156,7 +161,7 @@ class ScanPage : Fragment(), OverlayView.SizeChangedInformer, DialogInterface.On
                 mainViewModel.registeredProductName.postValue(stringona.toString())
                 imageTextAnalyzer.found = false
                 imageTextAnalyzer.isAnalyzing = false
-                Snackbar.make(preview_view, stringona.toString(), Snackbar.LENGTH_LONG).show()
+                mainViewModel.insertProduct()
             }
         } else if(resultCode != Activity.RESULT_OK && requestCode == 666) {
             ProductInsertNameDialogFragment(this).show(childFragmentManager, "insert_product_name")
@@ -186,8 +191,8 @@ class ScanPage : Fragment(), OverlayView.SizeChangedInformer, DialogInterface.On
     }
 
     override fun onNameSelected(productName: String) {
-        Snackbar.make(preview_view, productName, Snackbar.LENGTH_LONG).show()
         mainViewModel.registeredProductName.postValue(productName)
+        mainViewModel.insertProduct()
     }
 
     override fun onDismiss(dialog: DialogInterface?) {

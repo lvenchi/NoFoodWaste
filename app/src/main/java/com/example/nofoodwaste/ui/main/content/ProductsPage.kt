@@ -19,7 +19,6 @@ import com.example.nofoodwaste.models.Product
 import com.example.nofoodwaste.viewmodels.MainViewModel
 import com.google.android.material.datepicker.MaterialDatePicker
 import kotlinx.android.synthetic.main.fragment_products_page.*
-import java.util.*
 import javax.inject.Inject
 import kotlin.collections.ArrayList
 
@@ -28,14 +27,12 @@ class ProductsPage : Fragment() {
     @Inject
     lateinit var mainViewModel: MainViewModel
 
-    var productList: ArrayList<Product> = ArrayList()
+    private var productList: ArrayList<Product> = ArrayList()
 
     private lateinit var materialDatePicker: MaterialDatePicker <androidx.core.util.Pair<Long,Long>>
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         ComponentInjector.component.inject(this)
-        populateList()
         materialDatePicker = MaterialDatePicker.Builder.dateRangePicker().setTheme(R.style.materialCalendarStyle).build()
         super.onCreate(savedInstanceState)
     }
@@ -70,11 +67,16 @@ class ProductsPage : Fragment() {
         })
 
         products_list.also {
+
             it.adapter = DayAdapter().also { adapter ->
                 adapter.updateList(productList)
             }
             it.layoutManager = LinearLayoutManager(view.context)
             it.setHasFixedSize(false)
+
+            mainViewModel.productList.observe(viewLifecycleOwner, Observer { list ->
+                (it.adapter as DayAdapter).updateList(list)
+            })
         }
 
         calendar_button.setOnClickListener {
@@ -82,9 +84,7 @@ class ProductsPage : Fragment() {
                 materialDatePicker.show(activity?.supportFragmentManager!!, "datePicker")
             } else {
                 mainViewModel.dateRange.postValue(null)
-
             }
-
         }
 
         mainViewModel.filterString.observe( viewLifecycleOwner, Observer {
@@ -108,41 +108,6 @@ class ProductsPage : Fragment() {
                 && product.expirationDate?.time ?: 0 in dateFilter.first!! .. dateFilter.second!! } )
     }
 
-    /*private fun updateFilteredList( textFilter: String?, dateFilter: Date?){
-        if(textFilter.isNullOrEmpty() && dateFilter == null){
-            (products_list.adapter as DayAdapter).updateList(productList)
-        } else if( textFilter == null) (products_list.adapter as DayAdapter).updateList(productList.filter {
-                product ->  product.expirationDate?.time ?: 0 < dateFilter?.time ?: 1 }
-        )
-        else if( dateFilter == null) (products_list.adapter as DayAdapter).updateList(productList.filter {
-                product ->  product.productName?.contains(mainViewModel.filterString.value ?: "") ?: false }
-        )
-        else (products_list.adapter as DayAdapter).updateList( productList.filter {
-                product ->  product.productName?.contains(textFilter) ?: false
-                && product.expirationDate?.time ?: 0 < dateFilter.time } )
-    }*/
 
-    private fun populateList(){
-
-        for( i in -2..10){
-            val now = Calendar.getInstance()
-            now.add(Calendar.DATE, i)
-            productList.add(
-                Product().also {
-                    it.dateAsLong = now.timeInMillis
-                    it.expirationDate = now.time
-                    it.productName = "Prodotto $i"
-                }
-            )
-
-            productList.add(
-                Product().also {
-                    it.dateAsLong = now.timeInMillis
-                    it.expirationDate = now.time
-                    it.productName = "Prodotto $i"
-                }
-            )
-        }
-    }
 
 }

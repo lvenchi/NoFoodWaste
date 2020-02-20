@@ -8,6 +8,7 @@ import android.util.Size
 import android.view.View
 import com.example.nofoodwaste.utils.boundingBoxFloat
 import com.google.firebase.ml.vision.text.FirebaseVisionText
+import kotlin.math.absoluteValue
 
 class OverlayView( context: Context, attrs: AttributeSet) : View(context, attrs){
 
@@ -54,13 +55,14 @@ class OverlayView( context: Context, attrs: AttributeSet) : View(context, attrs)
                     top *= verticalScreenRatio
                     bottom *= verticalScreenRatio
                 }
-                inverse.setRotate(-currRotation.toFloat(), rect.centerX(), rect.centerY())
-                inverse.mapRect(rect)
+                //inverse.setRotate(-currRotation.toFloat(), rect.centerX(), rect.centerY())
+                //inverse.mapRect(rect)
                 //rotationMatrix.mapRect(rect)
                 //}
                 //rotationMatrix.setRotate(currRotation.toFloat(), width/2F, height/2F )
                 //canvas?.setMatrix(rotationMatrix)
                 canvas?.drawRect(rect, rectPaint)
+                if(currRotation.absoluteValue in 89..180 || currRotation.absoluteValue in 269..360) rotation = currRotation.toFloat() + 180 else rotation = currRotation.toFloat()
             }
         }
         else

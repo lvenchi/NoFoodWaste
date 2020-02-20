@@ -10,6 +10,8 @@ import com.example.nofoodwaste.utils.Utils
 import com.google.firebase.ml.vision.FirebaseVision
 import com.google.firebase.ml.vision.common.FirebaseVisionImage
 import com.google.firebase.ml.vision.common.FirebaseVisionImageMetadata
+import java.lang.StringBuilder
+import java.text.SimpleDateFormat
 import kotlin.math.absoluteValue
 
 class MyImageTextAnalyzer<T> (private val analyzerOwner: T? ) :
@@ -43,7 +45,6 @@ class MyImageTextAnalyzer<T> (private val analyzerOwner: T? ) :
 
     override fun analyze(imageProxy: ImageProxy) {
         if (imageProxy.image != null && !isAnalyzing) {
-            imageProxy.setCropRect(rectMargin?.toRect())
             val currentDegrees = (currentOrientation.absoluteValue + 90) % 360
             val imageRotation = degreesToFirebaseRotation(currentDegrees)
             val firebaseVisonImage = FirebaseVisionImage.fromMediaImage(imageProxy.image!!, imageRotation)
@@ -62,14 +63,16 @@ class MyImageTextAnalyzer<T> (private val analyzerOwner: T? ) :
 
                         for (text in txt) {
 
-                            for (pattern in Utils.getDateFormatPatterns()) {
+                            for (patternFormat in Utils.getDateFormatPatterns()) {
 
-                                val matcher = pattern.matcher(text.text.replace("\n", " "))
+                                val matcher = patternFormat.key.matcher(text.text.replace("\n", " "))
 
-                                if (matcher.matches()) {
+                                if (matcher.find()) {
                                     found = true
                                     isAnalyzing = true
-                                    analyzerOwner?.stopDateAnalysis(text.text, text, pattern)
+                                    val date = matcher.group(2)
+
+                                    analyzerOwner?.stopDateAnalysis(date ?: "", text, patternFormat.toPair())
 
                                     break
                                 }
